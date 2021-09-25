@@ -24,7 +24,7 @@ EXPOSE 80 443
 ADD docker-entrypoint.sh /
 
 HEALTHCHECK CMD wget -q --no-cache --spider localhost
-ENTRYPOINT ["/docker-entrypoint.sh"]
+#ENTRYPOINT ["/docker-entrypoint.sh"]
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 
 #RUN mkdir -p /htdocs
