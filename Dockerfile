@@ -35,4 +35,19 @@ ADD docker-entrypoint.sh /
 
 HEALTHCHECK CMD wget -q --no-cache --spider localhost
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 
+RUN mkdir -p /htdocs
+RUN chown -R www-data:www-data /htdocs
+RUN chmod -R 755 /htdocs
+WORKDIR /htdocs
+COPY composer.json composer.lock  ./
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
+COPY ./data ./
+
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
